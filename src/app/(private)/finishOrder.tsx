@@ -1,10 +1,16 @@
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { api } from "@/services/api";
 import { router } from "expo-router";
+import Button from "@/components/base/button";
+import { CircularLoader } from "@/components/molecules/Loaders/circular";
+import { useState } from "react";
 
 export default function FinishOrder(){
+
+    const screenWidth = Dimensions.get("window").width;
+    const[loading, setLoading] = useState(false);
 
     const { table, order_id } = useLocalSearchParams<{
             order_id: string ,
@@ -15,6 +21,8 @@ export default function FinishOrder(){
         console.log(table)
 
     async function handleFinishOrder(){
+
+        setLoading(true);
 
         try{
             const response = await api.put("/order/send", {
@@ -27,6 +35,8 @@ export default function FinishOrder(){
         } catch (error) {
             console.log(error)
             return;
+        } finally {
+            setLoading(false)
         }
     }
         
@@ -37,13 +47,40 @@ export default function FinishOrder(){
             <Text style={styles.alert}>Deseja finalizar o pedido?</Text>
             <Text style={styles.title}>Mesa {table}</Text>
 
-            <TouchableOpacity 
+            {/* <TouchableOpacity 
             onPress={handleFinishOrder}
             style={styles.button}>
                 <Text style={styles.textButton}>Finalizar pedido</Text>
                 <Feather size={20} color="#1d1d2e" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+        <Button
+        width={screenWidth * 0.8} 
+        height={48}
+        style={{ marginTop: 20 }}
+        backgroundColor="#f56427"
+        isLoading={loading}
+        disabled={loading}
+        loadingTextBackgroundColor="#f56427"
+        onPress={handleFinishOrder}
+        loadingTextColor="#000"
+        showLoadingIndicator
+        renderLoadingIndicator={() => (
+            <ActivityIndicator color="#000" size="small"/>
+        )}
+      >
+        <View style={styles.btn}>
+          <Text style={[styles.btnText]}
+          >
+            Finalizar pedido
+          </Text>
+            <Ionicons name="arrow-forward" size={18} color="black" />
         </View>
+      </Button>
+        </View>
+
+
+
 </>
     )
 }
@@ -51,7 +88,7 @@ export default function FinishOrder(){
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#1d1d2e',
+        backgroundColor: '#1c0f0a',
         paddingVertical: "5%",
         paddingHorizontal: "4%",
         alignItems: "center",
@@ -70,7 +107,7 @@ const styles = StyleSheet.create({
         marginBottom: 12
     },
     button:{
-        backgroundColor: "#3fffa3",
+        backgroundColor: "#f56427",
         flexDirection: "row",
         width: "65%",
         height: 40,
@@ -83,5 +120,18 @@ const styles = StyleSheet.create({
         marginRight: 8,
         fontWeight: "bold",
         color: "#1d1d2e"  
-    }
+    },
+    btn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,  
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    
+  },
+  btnText: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#000",
+  },
 })

@@ -23,7 +23,7 @@ export function ListItem({ data, deleteItem }: ItemProps){
             <TouchableOpacity
             onPress={()=>{removeItem(data.id)}}
             >
-                <Feather name="trash-2" color="#FF3F4b" size={25}/>
+                <Feather name="trash-2" color="#c50200" size={25}/>
             </TouchableOpacity>
         </View>
     )
@@ -31,7 +31,7 @@ export function ListItem({ data, deleteItem }: ItemProps){
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#101026",
+        backgroundColor: "#320706",
         flex:1,
         alignItems: "center",
         justifyContent: "space-between",

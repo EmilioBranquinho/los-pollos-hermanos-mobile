@@ -168,7 +168,7 @@ export default function Order(){
             <TouchableOpacity
                 onPress={()=>{handleCloseOrder(order_id)}}
                 >
-                    <Feather name="trash-2" size={28} color="#FF3F4b"/>
+                    <Feather name="trash-2" size={28} color="#c50200"/>
                 </TouchableOpacity>                  
                 )}
             </View>
@@ -230,7 +230,6 @@ export default function Order(){
                 renderItem={ ({ item }) => <ListItem data={item} deleteItem={handleDeleteOrderItem}/>}           
                 />
 
-
                 <Modal
                 transparent={true}
                 visible={modalCategoryVisible}
@@ -243,7 +242,6 @@ export default function Order(){
                     />
 
                 </Modal>
-
 
                 <Modal
                 transparent={true}
@@ -262,10 +260,12 @@ export default function Order(){
     )
 }
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#1d1d2e",
+        backgroundColor: "#1c0f0a",
         paddingVertical: "5%",
         paddingEnd: "4%",
         paddingStart: "4%"
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         marginRight: 14
     },
     input:{
-        backgroundColor: "#101026",
+        backgroundColor: "#2a1510",
         borderRadius: 4,
         width: "100%",
         height: 60,
@@ -291,7 +291,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingHorizontal: 8,
         color: "#FFF",
-        fontSize: 30
+        fontSize: 30,
+        borderStyle: "solid",
+        borderColor: "#FFF"
     },
     qtdContainer:{
         flexDirection: "row",
@@ -310,7 +312,7 @@ const styles = StyleSheet.create({
     },
     buttonAdd: {
         width: "20%",
-        backgroundColor: "#3fd1ff",
+        backgroundColor: "#c0262d",
         borderRadius: 4,
         height: 40,
         justifyContent: "center",
@@ -322,7 +324,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     button:{
-        backgroundColor: "#3fffa3",
+        backgroundColor: "#f56427",
         borderRadius: 4,
         height: 40,
         width: "75%",
