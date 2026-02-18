@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "mobile",
-    "slug": "mobile",
+    "slug": "los-pollos-hermanos",
     "version": "1.0.0",
     "router": {
       "root": "src/app"
@@ -48,6 +48,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "bc5e7ff1-8b04-4d4d-bc45-ba7d6085e72f"
+      }
+    },
+    "owner": "emiliohb"
   }
 }
