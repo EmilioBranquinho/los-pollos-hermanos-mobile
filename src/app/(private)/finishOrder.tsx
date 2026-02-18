@@ -1,13 +1,15 @@
 import { Text, TouchableOpacity, View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { api } from "@/services/api";
 import { router } from "expo-router";
 import Button from "@/components/base/button";
-import { CircularLoader } from "@/components/molecules/Loaders/circular";
 import { useState } from "react";
+import { useToast } from "@/components/molecules/toast";
 
 export default function FinishOrder(){
+
+    const toast = useToast();
 
     const screenWidth = Dimensions.get("window").width;
     const[loading, setLoading] = useState(false);
@@ -19,6 +21,10 @@ export default function FinishOrder(){
 
         console.log(order_id)
         console.log(table)
+    
+    const onBack =  () =>{
+        router.replace("/dashboard")
+    }
 
     async function handleFinishOrder(){
 
@@ -28,10 +34,16 @@ export default function FinishOrder(){
             const response = await api.put("/order/send", {
                 order_id: order_id
             })
+            
+            toast.show("Pedido finalizado com sucesso!", { 
+            type: "success",
+            backgroundColor: "#1ad41d",
+            duration: 3000,
+            position: "top",
+        });
 
-            console.log(response.data)
-
-            router.replace("/dashboard")
+        setTimeout(onBack, 3000)
+           
         } catch (error) {
             console.log(error)
             return;
@@ -78,8 +90,6 @@ export default function FinishOrder(){
         </View>
       </Button>
         </View>
-
-
 
 </>
     )

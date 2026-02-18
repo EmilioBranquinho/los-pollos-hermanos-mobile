@@ -6,6 +6,7 @@ import { api } from "@/services/api";
 import { router } from "expo-router";
 import { ModalPicker } from "@/components/ModalPicker";
 import { ListItem } from "@/components/ListItem";
+import { useToast } from "@/components/molecules/toast";
 
 export interface CategoryProps {
     id: string,
@@ -25,6 +26,8 @@ interface OrderItemProps {
 }
 
 export default function Order(){
+
+    const toast = useToast();
     
     const { table, order_id } = useLocalSearchParams<{
         order_id: string ,
@@ -110,7 +113,7 @@ export default function Order(){
             }
 
             setOrderItems(oldArray => [...oldArray, data])
-
+            
             console.log(response.data)
 
         } catch (error) {

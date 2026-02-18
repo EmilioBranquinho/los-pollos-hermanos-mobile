@@ -23,20 +23,20 @@ export default function PrivateLayout() {
   }
 
   return <Stack screenOptions={{ headerShown: false }}>
-                   <Stack.Screen
+         <Stack.Screen
             name="finishOrder"
             options={{
               headerShown: true,
               title: "Finalizando",
               headerStyle: {
-                backgroundColor: "#1d1d2e",       
+                backgroundColor: "#1c0f0a",       
               },
               headerTintColor: "#FFF",
                 headerLeft: () => (
       <Feather
         name="arrow-left"
         size={24}
-        color="black"
+        color="#FFF"
         onPress={() => router.back()}
         style={{ marginLeft: 16 }}
       />

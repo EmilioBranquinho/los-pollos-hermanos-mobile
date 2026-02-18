@@ -1,18 +1,32 @@
+import Button from "@/components/base/button";
+import { useToast } from "@/components/molecules/toast";
 import { AuthContext } from "@/contexts/AuthContext";
+import { Ionicons } from "@expo/vector-icons";
 import { useContext, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Dimensions } from "react-native";
+import { Image } from "react-native";
 
 export default function SignIn(){
 
+    const toast = useToast();
+
+    const screenWidth = Dimensions.get("window").width;
+
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    
 
     const { signIn, loadingAuth } = useContext(AuthContext)
 
     const onSubmit = async() =>{
         
         if(!email || !password){
-            alert('Preencha todos os campos')
+            toast.show("Preencha todos os campos", { 
+            type: "error",
+            backgroundColor: "#e91111",
+            duration: 3000,
+            position: "top",
+        });
             return;
         }
 
@@ -23,7 +37,11 @@ export default function SignIn(){
     return(
         <>
         <View style={styles.container}>
-            
+            <Image
+            style={styles.logo}
+            source={require('../../../assets/images/logo.png')}
+            resizeMode="contain"
+            />
 
             <View style={styles.inputContainer}>
                 <TextInput
@@ -43,16 +61,29 @@ export default function SignIn(){
                 onChangeText={setPassword}
                 />
 
-                <TouchableOpacity 
-                style={styles.button}
-                onPress={onSubmit}
-                >
-                    {loadingAuth ?(
-                        <ActivityIndicator size={"small"} color="#FFF"/>
-                    ): (
-                        <Text>Entrar</Text>
-                    )}
-                </TouchableOpacity>
+        <Button
+        width={screenWidth * 0.8} 
+        height={48}
+        style={{ marginTop: 20 }}
+        backgroundColor="#f56427"
+        isLoading={loadingAuth}
+        disabled={loadingAuth}
+        loadingTextBackgroundColor="#f56427"
+        onPress={onSubmit}
+        loadingTextColor="#000"
+        showLoadingIndicator
+        renderLoadingIndicator={() => (
+            <ActivityIndicator color="#000" size="small"/>
+        )}
+      >
+        <View style={styles.btn}>
+          <Text style={[styles.btnText]}
+          >
+            Entrar
+          </Text>
+            <Ionicons name="arrow-forward" size={18} color="black" />
+        </View>
+      </Button>
             </View>
         </View>
         </>
@@ -64,7 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#1d1d2e"
+        backgroundColor: "#1c0f0a"
     },
     inputContainer:{
         width: "95%",
@@ -76,7 +107,7 @@ const styles = StyleSheet.create({
     input:{
         width: "95%",
         height: 40,
-        backgroundColor: "#101026",
+        backgroundColor: "#2a1510",
         marginBottom: 12,
         borderRadius: 4,
         paddingHorizontal: 8,
@@ -85,7 +116,7 @@ const styles = StyleSheet.create({
     button: {
         width: "95%",
         height: 40,
-        backgroundColor: "#5fffa3",
+        backgroundColor: "#f56427",
         borderRadius: 4,
         justifyContent: "center",
         alignItems: "center"
@@ -94,6 +125,24 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         color: "#101026"
-    }
+    },
+    btn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,  
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    
+  },
+  btnText: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#000",
+  },
+  logo: {
+    width: 300,
+    height: 150,
+    marginBottom: 1,
+  }
 
 })

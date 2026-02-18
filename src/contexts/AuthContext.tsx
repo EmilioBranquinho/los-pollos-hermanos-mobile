@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { router } from "expo-router";
+import { useToast } from "@/components/molecules/toast";
 
 interface AuthProviderProps{
     children: ReactNode
@@ -31,6 +32,8 @@ interface SignInProps{
 export const AuthContext = createContext({} as AuthContextData);
 
 export default function AuthProvider({children}: AuthProviderProps ){
+
+    const toast = useToast();
 
     const[user, setUser] = useState<UserProps>({
         id: "",
